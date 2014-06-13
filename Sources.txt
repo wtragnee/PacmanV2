@@ -1,0 +1,1 @@
+management of multi key event : http://www.commentcamarche.net/forum/affich-27474804-java-keylistener-multi-touche
