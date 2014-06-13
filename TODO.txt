@@ -1,0 +1,9 @@
+frames
+différents mobs
+image sur les mobs
+image sur les bordures
+création de la map
+musique
+jframe resizable
+score
+bdd
