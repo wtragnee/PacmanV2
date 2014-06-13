@@ -34,9 +34,8 @@ public class PacmanV2 {
         jPanelTest.setBackground(Color.blue);
         jPanelTest.setPreferredSize(new Dimension(20,20));
         Dimension dimensionTest = jFrameTest.getSize();
-        System.out.println(dimensionTest.getHeight());
-        System.out.println(dimensionTest.getWidth());
         jFrameTest.add(jPanelTest);
+        jFrameTest.addKeyListener(new KeyListenerPacmanV2(jPanelTest));
         jFrameTest.setVisible(true);
     }
     

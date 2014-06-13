@@ -7,3 +7,5 @@ musique
 jframe resizable
 score
 bdd
+mode touches inversées
+mode monstre
