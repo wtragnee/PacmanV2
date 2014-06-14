@@ -6,7 +6,6 @@
 
 package pacmanv2;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
 import java.util.ArrayList;
@@ -23,8 +22,8 @@ public class MapContent {
     JFrame window;
     boolean editingMap;
     JPanel userBox;
-    private final List<Integer[]> coords;
-    /* for each coord in coords :
+    private final List<int[]> coordsList;
+    /* for each coords in coordsList :
         - first is positionX
         - second is positionY
         - third is width
@@ -36,9 +35,9 @@ public class MapContent {
     public MapContent(JFrame window) {
         this.window = window;
         this.editingMap = true;
-        coords = new ArrayList();
+        coordsList = new ArrayList();
         userBox = new JPanel();
-        userBox.setBorder(BorderFactory.createLineBorder(Color.green));
+        userBox.setBorder(BorderFactory.createLineBorder(PacmanV2.colorBorderUserBox));
         userBox.setSize(new Dimension(PacmanV2.boxWidth,PacmanV2.boxHeight));
         this.window.addKeyListener(new MapKeyListener(this));
         this.window.add(userBox);
@@ -46,6 +45,33 @@ public class MapContent {
     
     public void editMap() {
         boolean isCoordsModified = false;
-        
+        int currentPositionX1 = (int) userBox.getLocation().getX();
+        int currentPositionY1 = (int) userBox.getLocation().getY();
+        System.out.println(currentPositionX1);
+        System.out.println(currentPositionY1);
+        int currentPositionX2 = currentPositionX1 + PacmanV2.boxWidth;
+        int currentPositionY2 = currentPositionY1 + PacmanV2.boxHeight;
+        for(int[] coords : coordsList) {
+            if(currentPositionX1 == coords[0] && currentPositionX2 == (coords[0]+coords[2])) {// X1 = coord 1 et X2 < coord 1 + coord3
+                
+            }
+        }
+        if(!isCoordsModified) {
+            this.addNewZoneToMap(currentPositionX1, currentPositionY1);
+        }
+    }
+    
+    public void addNewZoneToMap(int coordX, int coordY){
+        JPanel newZone = new JPanel();
+        newZone.setSize(PacmanV2.boxWidth, PacmanV2.boxHeight);
+        newZone.setLocation(coordX, coordY);
+        newZone.setBackground(PacmanV2.colorWallBackground);
+        this.window.add(newZone);
+        //System.out.println(coordX);
+        //System.out.println(coordY);
+    }
+    
+    public void saveMap(){
+        System.out.println(window.getComponentCount());
     }
 }

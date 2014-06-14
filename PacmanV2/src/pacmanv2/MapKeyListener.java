@@ -5,7 +5,6 @@
  */
 package pacmanv2;
 
-import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.TreeSet;
@@ -64,8 +63,10 @@ public class MapKeyListener implements KeyListener {
                 if(map.editingMap) {
                     map.editMap();
                 } else {
-                    map.userBox.setBackground(Color.red);
+                    
                 }
+            } else if (keyCode == KeyEvent.VK_ENTER) {
+                map.saveMap();
             }
     }
 }

@@ -6,6 +6,11 @@
 
 package pacmanv2;
 
+import java.awt.Color;
+import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import javax.swing.JFrame;
 
 /**
@@ -17,10 +22,14 @@ public class PacmanV2 {
      * @param args the command line arguments
      */
     
+    static String constantsFileName = "constants.json";
     static int jFrameWidth = 500;
     static int jFrameHeight = 500;
     static int boxWidth = 20;
     static int boxHeight = 20;
+    static Color colorBorderUserBox = Color.green;
+    static Color colorNormalBackground = Color.white;
+    static Color colorWallBackground = Color.black;
     static String jFrameTitle = "PacmanV2";
     // Continue
     
@@ -39,7 +48,21 @@ public class PacmanV2 {
     }
     
     public static void loadConstants(){
-        
+        String answer ="";
+        try{
+            InputStream ips=new FileInputStream(constantsFileName); 
+            InputStreamReader ipsr=new InputStreamReader(ips);
+            BufferedReader br=new BufferedReader(ipsr);
+            String ligne;
+            while ((ligne=br.readLine())!=null){
+                    System.out.println(ligne);
+                    answer+=ligne+"\n";
+            }
+            br.close(); 
+            }		
+            catch (Exception e){
+                    System.out.println(e.toString());
+            }
     }
     
     public static void createJFrame(){
@@ -47,6 +70,7 @@ public class PacmanV2 {
         window.setLayout(null);
         window.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         window.setTitle(jFrameTitle);
+        window.setBackground(colorNormalBackground);
         window.setSize(jFrameWidth, jFrameHeight);
         
         new MapContent(window);
