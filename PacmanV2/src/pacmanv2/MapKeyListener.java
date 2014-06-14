@@ -9,20 +9,19 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.TreeSet;
-import javax.swing.JPanel;
 
 /**
  *
  * @author William
  */
-public class KeyListenerPacmanV2 implements KeyListener {
+public class MapKeyListener implements KeyListener {
 
     private TreeSet<Integer> set = new TreeSet<Integer>();
-    JPanel boxUser;
-    int pixelPerFrame = 1;
+    MapContent map;
+    int pixelPerFrame = 2;
 
-    public KeyListenerPacmanV2(JPanel jPanel) {
-        this.boxUser = jPanel;
+    public MapKeyListener(MapContent map) {
+        this.map = map;
     }
 
     @Override
@@ -45,27 +44,27 @@ public class KeyListenerPacmanV2 implements KeyListener {
         if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT
                     || keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_UP) {
                 int locationModified;
-                double locationX = boxUser.getLocation().getX();
-                double locationY = boxUser.getLocation().getY();
+                double locationX = map.userBox.getLocation().getX();
+                double locationY = map.userBox.getLocation().getY();
                 
                 if (keyCode == KeyEvent.VK_LEFT) {
                     locationModified = (int) locationX - pixelPerFrame;
-                    boxUser.setLocation(locationModified, (int) locationY);
+                    map.userBox.setLocation(locationModified, (int) locationY);
                 } else if (keyCode == KeyEvent.VK_RIGHT) {
                     locationModified = (int) locationX + pixelPerFrame;
-                    boxUser.setLocation(locationModified, (int) locationY);
+                    map.userBox.setLocation(locationModified, (int) locationY);
                 } else if (keyCode == KeyEvent.VK_UP) {
                     locationModified = (int) locationY - pixelPerFrame;
-                    boxUser.setLocation((int) locationX, locationModified);
+                    map.userBox.setLocation((int) locationX, locationModified);
                 } else if (keyCode == KeyEvent.VK_DOWN) {
                     locationModified = (int) locationY + pixelPerFrame;
-                    boxUser.setLocation((int) locationX, locationModified);
+                    map.userBox.setLocation((int) locationX, locationModified);
                 }
             } else if (keyCode == KeyEvent.VK_SPACE) {
-                if(boxUser.getBackground() == Color.red) {
-                    boxUser.setBackground(Color.blue);
+                if(map.editingMap) {
+                    map.editMap();
                 } else {
-                    boxUser.setBackground(Color.red);
+                    map.userBox.setBackground(Color.red);
                 }
             }
     }
