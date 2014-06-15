@@ -22,12 +22,14 @@ public class MapContent {
     JFrame window;
     boolean editingMap;
     JPanel userBox;
-    private final List<int[]> coordsList;
+    private List<int[]> coordsList;
+    private List<JPanel> jPanelList;
     /* for each coords in coordsList :
         - first is positionX
         - second is positionY
         - third is width
-        - fourth and last is height
+        - fourth is height
+        - fifth and last is index of JPanel in list of JPanels
     */
     
     
@@ -47,8 +49,8 @@ public class MapContent {
         boolean isCoordsModified = false;
         int currentPositionX1 = (int) userBox.getLocation().getX();
         int currentPositionY1 = (int) userBox.getLocation().getY();
-        System.out.println(currentPositionX1);
-        System.out.println(currentPositionY1);
+        //System.out.println(currentPositionX1);
+        //System.out.println(currentPositionY1);
         int currentPositionX2 = currentPositionX1 + PacmanV2.boxWidth;
         int currentPositionY2 = currentPositionY1 + PacmanV2.boxHeight;
         for(int[] coords : coordsList) {
