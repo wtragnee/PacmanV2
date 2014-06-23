@@ -49,8 +49,6 @@ public class MapContent {
         boolean isCoordsModified = false;
         int currentPositionX1 = (int) userBox.getLocation().getX();
         int currentPositionY1 = (int) userBox.getLocation().getY();
-        //System.out.println(currentPositionX1);
-        //System.out.println(currentPositionY1);
         int currentPositionX2 = currentPositionX1 + PacmanV2.boxWidth;
         int currentPositionY2 = currentPositionY1 + PacmanV2.boxHeight;
         for(int[] coords : coordsList) {
@@ -69,6 +67,7 @@ public class MapContent {
         newZone.setLocation(coordX, coordY);
         newZone.setBackground(PacmanV2.colorWallBackground);
         this.window.add(newZone);
+        this.jPanelList.add(newZone);
         //System.out.println(coordX);
         //System.out.println(coordY);
     }
