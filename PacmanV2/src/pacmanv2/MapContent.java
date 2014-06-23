@@ -6,10 +6,9 @@
 
 package pacmanv2;
 
-import java.awt.Dimension;
+import java.awt.GridLayout;
 import java.util.List;
 import java.util.ArrayList;
-import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
@@ -22,57 +21,90 @@ public class MapContent {
     JFrame window;
     boolean editingMap;
     JPanel userBox;
-    private List<int[]> coordsList;
-    private List<JPanel> jPanelList;
-    /* for each coords in coordsList :
-        - first is positionX
-        - second is positionY
-        - third is width
-        - fourth is height
-        - fifth and last is index of JPanel in list of JPanels
-    */
-    
+    List<Coordinate> coordsList;
+    Position currentPosition;
+    int numberX; // Number of columns
+    int numberY; // Number of lines
     
     // if new map
-    public MapContent(JFrame window) {
+    MapContent(JFrame window, int numberX, int numberY) {
         this.window = window;
         this.editingMap = true;
         coordsList = new ArrayList();
-        userBox = new JPanel();
-        userBox.setBorder(BorderFactory.createLineBorder(PacmanV2.colorBorderUserBox));
-        userBox.setSize(new Dimension(PacmanV2.boxWidth,PacmanV2.boxHeight));
-        this.window.addKeyListener(new MapKeyListener(this));
-        this.window.add(userBox);
-    }
-    
-    public void editMap() {
-        boolean isCoordsModified = false;
-        int currentPositionX1 = (int) userBox.getLocation().getX();
-        int currentPositionY1 = (int) userBox.getLocation().getY();
-        int currentPositionX2 = currentPositionX1 + PacmanV2.boxWidth;
-        int currentPositionY2 = currentPositionY1 + PacmanV2.boxHeight;
-        for(int[] coords : coordsList) {
-            if(currentPositionX1 == coords[0] && currentPositionX2 == (coords[0]+coords[2])) {// X1 = coord 1 et X2 < coord 1 + coord3
-                
+        this.numberX = numberX;
+        this.numberY = numberY;
+        
+        this.window.setLayout(new GridLayout(numberX, numberY));
+        for (int i = 0; i < numberX; i++) {
+            for (int j = 0; j < numberY; j++) {
+                JPanel jPanel = new JPanel();
+                coordsList.add(new Coordinate(j, i, false, jPanel));
+                this.window.add(jPanel);
             }
         }
-        if(!isCoordsModified) {
-            this.addNewZoneToMap(currentPositionX1, currentPositionY1);
+        currentPosition = new Position(0,0);
+        this.window.addKeyListener(new MapKeyListener(this));
+        this.setUserBox();
+    }
+    
+    void setUserBox(){
+        for (Coordinate coord : coordsList) {
+            if(coord.position.positionX == currentPosition.positionX 
+                    && coord.position.positionY == currentPosition.positionY) {
+                coord.setBoxAsUserBox();
+            } else {
+                coord.setBoxAsNotUserBox();
+            }
         }
     }
     
-    public void addNewZoneToMap(int coordX, int coordY){
-        JPanel newZone = new JPanel();
-        newZone.setSize(PacmanV2.boxWidth, PacmanV2.boxHeight);
-        newZone.setLocation(coordX, coordY);
-        newZone.setBackground(PacmanV2.colorWallBackground);
-        this.window.add(newZone);
-        this.jPanelList.add(newZone);
-        //System.out.println(coordX);
-        //System.out.println(coordY);
+    void editMap() {
+        for (Coordinate coord : coordsList) {
+            if(coord.position.positionX == currentPosition.positionX 
+                    && coord.position.positionY == currentPosition.positionY) {
+                coord.changeWall();
+            }
+        }
     }
     
-    public void saveMap(){
-        System.out.println(window.getComponentCount());
+    void leftMove(){
+        if(currentPosition.positionX > 0) {
+            currentPosition.positionX--;
+        } else {
+            currentPosition.positionX = numberX-1;
+        }
+        setUserBox();
+    }
+    
+    void rightMove() {
+        if(currentPosition.positionX < numberX-1) {
+            currentPosition.positionX++;
+        } else {
+            currentPosition.positionX = 0;
+        }
+        setUserBox();
+    }
+    
+    void upMove() {
+        if(currentPosition.positionY > 0) {
+            currentPosition.positionY--;
+        } else {
+            currentPosition.positionY = numberY-1;
+        }
+        setUserBox();
+    }
+    
+    void downMove() {
+        if(currentPosition.positionY < numberY-1) {
+            currentPosition.positionY++;
+        } else {
+            currentPosition.positionY = 0;
+        }
+        setUserBox();
+    }
+    
+    void saveMap(){
+        System.out.println(currentPosition.positionX);
+        System.out.println(currentPosition.positionY);
     }
 }

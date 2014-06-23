@@ -17,7 +17,6 @@ public class MapKeyListener implements KeyListener {
 
     private TreeSet<Integer> set = new TreeSet<Integer>();
     MapContent map;
-    int pixelPerFrame = 2;
 
     public MapKeyListener(MapContent map) {
         this.map = map;
@@ -42,23 +41,15 @@ public class MapKeyListener implements KeyListener {
     private void executeKey(int keyCode) {
         if (keyCode == KeyEvent.VK_LEFT || keyCode == KeyEvent.VK_RIGHT
                     || keyCode == KeyEvent.VK_DOWN || keyCode == KeyEvent.VK_UP) {
-                int locationModified;
-                double locationX = map.userBox.getLocation().getX();
-                double locationY = map.userBox.getLocation().getY();
-                
-                if (keyCode == KeyEvent.VK_LEFT) {
-                    locationModified = (int) locationX - pixelPerFrame;
-                    map.userBox.setLocation(locationModified, (int) locationY);
-                } else if (keyCode == KeyEvent.VK_RIGHT) {
-                    locationModified = (int) locationX + pixelPerFrame;
-                    map.userBox.setLocation(locationModified, (int) locationY);
-                } else if (keyCode == KeyEvent.VK_UP) {
-                    locationModified = (int) locationY - pixelPerFrame;
-                    map.userBox.setLocation((int) locationX, locationModified);
-                } else if (keyCode == KeyEvent.VK_DOWN) {
-                    locationModified = (int) locationY + pixelPerFrame;
-                    map.userBox.setLocation((int) locationX, locationModified);
-                }
+                    if(keyCode == KeyEvent.VK_LEFT) {
+                        this.map.leftMove();
+                    } else if (keyCode == KeyEvent.VK_RIGHT) {
+                        this.map.rightMove();
+                    } else if (keyCode == KeyEvent.VK_DOWN) {
+                        this.map.downMove();
+                    } else if (keyCode == KeyEvent.VK_UP) {
+                        this.map.upMove();
+                    }
             } else if (keyCode == KeyEvent.VK_SPACE) {
                 if(map.editingMap) {
                     map.editMap();

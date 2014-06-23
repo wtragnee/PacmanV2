@@ -13,7 +13,6 @@ import java.io.FileWriter;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -30,10 +29,9 @@ public class PacmanV2 {
     static String constantsFileName = "constants.json";
     static int jFrameWidth = 500;
     static int jFrameHeight = 500;
-    static int boxWidth = 20;
-    static int boxHeight = 20;
     static Color colorBorderUserBox = Color.green;
-    static Color colorNormalBackground = Color.blue;
+    static Color colorBorderNormalBox = Color.red;
+    static Color colorNormalBackground = Color.white;
     static Color colorWallBackground = Color.black;
     static String jFrameTitle = "PacmanV2";
     // Continue
@@ -78,11 +76,12 @@ public class PacmanV2 {
         JSONObject json = new JSONObject(jsonString);
         jFrameWidth = (int) json.get("jFrameWidth");
         jFrameHeight = (int) json.get("jFrameHeight");
-        boxWidth = (int) json.get("boxWidth");
-        boxHeight = (int) json.get("boxHeight");
         jFrameTitle = (String) json.get("jFrameTitle");
         if(getColorFromJSON(json, "colorBorderUserBox") != null) {
             colorBorderUserBox = getColorFromJSON(json, "colorBorderUserBox");
+        }
+        if(getColorFromJSON(json, "colorBorderNormalBox") != null) {
+            colorBorderNormalBox = getColorFromJSON(json, "colorBorderNormalBox");
         }
         if(getColorFromJSON(json, "colorNormalBackground") != null) {
             colorNormalBackground = getColorFromJSON(json, "colorNormalBackground");
@@ -109,10 +108,10 @@ public class PacmanV2 {
         JSONObject constants = new JSONObject();
         constants.put("jFrameWidth", jFrameWidth);
         constants.put("jFrameHeight", jFrameHeight);
-        constants.put("boxWidth", boxWidth);
-        constants.put("boxHeight", boxHeight);
         constants.put("colorBorderUserBox",
                 new JSONArray().put(colorBorderUserBox.getRed()).put(colorBorderUserBox.getGreen()).put(colorBorderUserBox.getBlue()));
+        constants.put("colorBorderNormalBox",
+                new JSONArray().put(colorBorderNormalBox.getRed()).put(colorBorderNormalBox.getGreen()).put(colorBorderNormalBox.getBlue()));
         constants.put("colorNormalBackground",
                 new JSONArray().put(colorNormalBackground.getRed()).put(colorNormalBackground.getGreen()).put(colorNormalBackground.getBlue()));
         constants.put("colorWallBackground",
@@ -126,12 +125,8 @@ public class PacmanV2 {
         window.setLayout(null);
         window.setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         window.setTitle(jFrameTitle);
-        /*JPanel background = new JPanel();
-        background.setSize(jFrameWidth, jFrameHeight);
-        background.setBackground(colorNormalBackground);
-        window.add(background);*/
         window.setSize(jFrameWidth, jFrameHeight);
-        MapContent mapContent = new MapContent(window);
+        MapContent mapContent = new MapContent(window, 23, 23);
         window.setVisible(true);
 
     }
