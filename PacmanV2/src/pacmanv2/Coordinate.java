@@ -24,6 +24,7 @@ class Coordinate {
         this.jPanel = jPanel;
         this.setBoxAsNotUserBox();
         this.setBackground();
+        this.jPanel.addMouseListener(new MapMouseListener(this));
     }
     
     void setBoxAsUserBox() {
